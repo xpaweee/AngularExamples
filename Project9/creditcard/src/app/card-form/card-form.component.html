@@ -1,19 +1,21 @@
-<form [formGroup]="cardForm">
-  <input formControlName="name"/>
-  <ng-container *ngIf="cardForm.controls.name.dirty && cardForm.controls.name.touched && cardForm.controls.name.errors">
-    <div *ngIf="cardForm.controls.name.errors.required">
-      Value is required.
+<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+  <app-input [control]="cardForm.controls.name" label="Name"></app-input>
+  <app-input [control]="cardForm.controls.cardNumber" label="Card Number"></app-input>
+  <div class="columns">
+    <div class="column">
+      <app-input [control]="cardForm.controls.expiration" label="Expiration"></app-input>
     </div>
-    <div *ngIf="cardForm.controls.name.errors.minlength">
-      Value you entered is  {{cardForm.controls.name.errors.minlength.actualLength}}
-      characters long, but it must be at local_grocery_store
-      {{cardForm.controls.name.errors.minlength.requiredLength}}
+    <div class="column">
+      <app-input [control]="cardForm.controls.securityCode" label="Security Code"></app-input>
     </div>
-  </ng-container>
-
+  </div>
+  <div class="buttons">
+    <button class="button is-primary" [disabled]="cardForm.invalid" type="submit">
+      Sumbit
+    </button>
+    <button class="button is-danger" type="button" (click)="onResetClick()">
+      Reset
+    </button>
+  </div>
 </form>
-
 <br />
-
-
-<div> Errors: {{cardForm.controls.name.errors | json }}  </div>

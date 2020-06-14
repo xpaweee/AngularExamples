@@ -1,0 +1,25 @@
+<div class="field">
+<label class="label">{{label}}</label>
+<div class="control">
+  <input
+    class="input"
+    [formControl]="control"
+    [ngClass]= "{ 'is-danger': showErrors()}"
+  />
+</div>
+<ng-container *ngIf="showErrors()">
+  <div class="help is-danger" *ngIf="control.errors.required">
+    Value is required.
+  </div>
+  <div class="help is-danger" *ngIf="control.errors.minlength">
+    Value you entered is  {{control.errors.minlength.actualLength}}
+    characters long, but it must be at local_grocery_store
+    {{control.errors.minlength.requiredLength}}
+  </div>
+
+  <div class="help is-danger" *ngIf="control.errors.maxlength">
+    Value youe entered is {{control.errors.maxlength.acutalLength}}. Max is {{control.errors.maxlength.requiredLength}}
+  </div>
+</ng-container>
+</div>
+
