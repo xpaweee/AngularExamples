@@ -3,10 +3,14 @@
     <a routerLink="/" class="item"> Angular Email</a>
 
     <div class="right menu">
-      <a routerLink="/inbox" routerLinkActive="active" class="ui item">Inbox</a>
-      <a routerLink="/signout" routerLinkActive="active" class="ui item">Sign out</a>
-      <a routerLink="/" routerLinkActive="active" class="ui item">Sign in</a>
-      <a routerLink="/signup" routerLinkActive="active" class="ui item">Sign up</a>
+      <ng-container *ngIf="signedin$ | async">
+        <a routerLink="/inbox" routerLinkActive="active" class="ui item">Inbox</a>
+        <a routerLink="/signout" routerLinkActive="active" class="ui item">Sign out</a>
+      </ng-container>
+      <ng-container *ngIf="!(signedin$ | async)">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="ui item">Sign in</a>
+        <a routerLink="/signup" routerLinkActive="active" class="ui item">Sign up</a>
+    </ng-container>
     </div>
   </div>
   <router-outlet></router-outlet>
