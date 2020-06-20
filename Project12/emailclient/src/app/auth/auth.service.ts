@@ -13,6 +13,16 @@ interface SignupResponse{
   username: string;
 }
 
+interface SingedinResponse {
+  authenticated: boolean;
+  username: string;
+}
+
+interface SiginCredentials{
+  username: string;
+  password: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -41,10 +51,28 @@ export class AuthService {
   }
 
   checkAuth() {
-    return this.http.get(`${this.rootUrl}/auth/signedin`, {withCredentials: true})
+    return this.http.get<SingedinResponse>(`${this.rootUrl}/auth/signedin`, {withCredentials: true})
     .pipe(
-      tap(response => {
+      tap(({ authenticated }) => {
+        this.signedin$.next(authenticated);
+      })
+    );
+  }
 
+  signout() {
+   return this.http.post(`${this.rootUrl}/auth/signout`, {})
+   .pipe(
+     tap( () => {
+       this.signedin$.next(false);
+     })
+   );
+  }
+
+  signin(credentials: SiginCredentials) {
+    return this.http.post(`${this.rootUrl}/auth/signin`, credentials)
+    .pipe(
+      tap(() => {
+        this.signedin$.next(true);
       })
     );
   }

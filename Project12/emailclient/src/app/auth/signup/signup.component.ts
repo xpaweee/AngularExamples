@@ -3,6 +3,7 @@ import { UniqueUsername } from './../validators/unique-username';
 import { MatchPassword } from './../validators/match-password';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ authForm = new FormGroup({
 
 
 
-  constructor(private matchPassword: MatchPassword, private uniqueUsername: UniqueUsername, private authService: AuthService) { }
+  constructor(private matchPassword: MatchPassword, private uniqueUsername: UniqueUsername, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -31,12 +32,12 @@ authForm = new FormGroup({
 
     this.authService.signup(this.authForm.value).subscribe({
       next: response => {
-
+        this.router.navigateByUrl('/inbox');
       },
       error: err => {
         if (!err.status) {
           this.authForm.setErrors({ noConnection: true});
-        } else{
+        } else {
           this.authForm.setErrors({ unknowError: true});
         }
       }

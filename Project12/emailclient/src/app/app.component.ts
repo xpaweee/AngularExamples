@@ -10,15 +10,22 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AppComponent {
   signedin$: BehaviorSubject<boolean>;
-  // signedin = false;
+  signedin = false;
 
   constructor(private authService: AuthService) {
     this.signedin$ = this.authService.signedin$;
   }
 
-  // ngOnInit(){
-  //   this.authService.signedin$.subscribe((signedin) => {
-  //     this.signedin = signedin;
-  //   });
-  // }
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit() {
+    this.authService.signedin$.subscribe((signedin) => {
+      this.signedin = signedin;
+      console.log(this.signedin);
+    });
+
+    this.authService.checkAuth().subscribe(() => {
+    });
+
+
+  }
 }

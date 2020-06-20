@@ -1,3 +1,4 @@
+import { SingoutComponent } from './singout/singout.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgModule } from '@angular/core';
@@ -5,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
+  {path: 'signout', component: SingoutComponent},
   {path: 'signup', component: SignupComponent},
   {path: '', component: SigninComponent}
 ];
